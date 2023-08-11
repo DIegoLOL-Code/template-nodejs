@@ -1,13 +1,16 @@
-const express = require('express');
-const app = express();
-const port = process.env.PORT ?? 3000;
+const TelegramBot = require('node-telegram-bot-api');
 
-app.use(express.static('public'))
+// Reemplaza 'TOKEN' con el token de tu bot proporcionado por BotFather
+const token ='6369608361:AAGGiWr65kpC-ssYCNN0WTnvJ0iVlOgJKpg';
 
-app.get('*', (req, res) => {
-    res.redirect('/');
-})
+// Crea una instancia del bot
+const bot = new TelegramBot(token, { polling: true });
 
-app.listen(port, () => {
-    console.log(`App listening on port ${port}`);
-})
+// Escucha los mensajes entrantes
+bot.on('message', (msg) => {
+  const chatId = msg.chat.id;
+  const messageText = msg.text;
+
+  // Responde al mensaje recibido
+  bot.sendMessage(chatId, `Has enviado el siguiente mensaje: ${messageText}, tu id de chat es: ${chatId}`);
+});
